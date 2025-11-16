@@ -31,8 +31,32 @@ function typeEffect() {
 typeEffect();
 
 
-// Scroll Effect 
+// Scroll Effect - Header transitions on scroll
 window.addEventListener("scroll", () => {
   const header = document.querySelector("header");
-  header.classList.toggle("scrolled", window.scrollY > 50);
+  if (window.scrollY > 50) {
+    header.classList.add("scrolled");
+    header.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    header.style.backdropFilter = "blur(10px)";
+  } else {
+    header.classList.remove("scrolled");
+    header.style.backgroundColor = "transparent";
+    header.style.backdropFilter = "none";
+  }
+});
+
+// Smooth scroll to anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    const href = this.getAttribute('href');
+    // Only smooth scroll for anchor links (not empty hrefs)
+    if (href !== '#' && document.querySelector(href)) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
 });
